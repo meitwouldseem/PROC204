@@ -38,6 +38,27 @@ class DBContext
 
         return $users;
     }//This function returns spurious data and can be improved
+
+    public function InsertSleepDatum($SleepiD, $UserID, $SleepStart, $SleepEnd, $SleepMood)
+    {
+        $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?,?)");
+        mysqli_stmt_bind_param($query, "iissi", $SleepiD, $UserID, $SleepStart, $SleepEnd, $SleepMood);
+        mysqli_stmt_execute($query);
+    }//Call procedure name in this function is speculative pending implementation of said procedure
+
+    public function GetSleepData()
+    {
+        $query = mysqli_query($this->connection, "SELECT * FROM SleepInstance")
+        or die (mysqli_error($this->connection));
+
+        $sleeps = [];
+
+        //Rows need to be retrieved this was to preserve the column names
+        while ($row = mysqli_fetch_array($query))
+            array_push($sleeps, $row);
+
+        return $sleeps;
+    }//This function returns spurious data and can be improved
 }
 
 ?>
