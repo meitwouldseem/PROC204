@@ -1,11 +1,11 @@
 <?php
- include_once "header.php"
-  
- $sleeps = $db->GetSleepData();
+include_once "header.php";
+
+$sleeps = $db->GetSleepData();
 ?>
 
 <body>
- <?php printr($sleeps); ?>
+<?php print_r($sleeps); ?>
 </body>
 
 

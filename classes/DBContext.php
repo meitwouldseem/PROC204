@@ -5,11 +5,11 @@ class DBContext
 	private $servername = "localhost";
 	private $username = "root";
 	private $password = "";
-	private $dbname = "";
+	private $dbname = "proc204";
 
 	private $connection;
 
-	private function __construct()
+	public function __construct()
 	{
 		$this->connection=mysqli_connect($this->servername,$this->username,$this->password,$this->dbname);
 
