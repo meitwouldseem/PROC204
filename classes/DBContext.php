@@ -2,10 +2,10 @@
 
 class DBContext
 {
-	private $servername = "localhost";
-	private $username = "root";
-	private $password = "";
-	private $dbname = "proc204";
+	private $servername = "proj-mysql.uopnet.plymouth.ac.uk";
+	private $username = "PRCO204_Y";
+	private $password = "auCw5WTCsg4L66ce";
+	private $dbname = "prco204_y";
 
 	private $connection;
 
