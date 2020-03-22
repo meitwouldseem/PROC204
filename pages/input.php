@@ -1,4 +1,8 @@
+<?php
 
+include_once "header.php";
+
+?>
 <head>
     
 </head>
@@ -19,10 +23,6 @@
         <main role="main" class="pb-3">
         </main>
     </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
 </body>
 </html>
 
