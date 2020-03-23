@@ -11,6 +11,7 @@ $db = new DBContext();
 <style>
     body {
         padding-top: 65px;
+        background-color: #2c2f33;
     }
 </style>
 
