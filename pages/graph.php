@@ -4,12 +4,13 @@ include_once "header.php";
 
 $graphdata = $db->GetSleepRange("2020-03-19 00:00:00", "2020-03-24 00:00:00");
 
-echo json_encode($graphdata);
 ?>
 <body>
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas id="Graph" width="1000" height="600"></canvas>
+</div>
+
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('Graph').getContext('2d');
 var myChart = new Chart(ctx, {
 type: 'line',
 data: {
@@ -27,6 +28,10 @@ data: {
     }]
 },
 options: {
+    animation: false,
+    scaleoverride: true,
+    responsive: false,
+    maintainAspectRatio: false,
     scales: {
         yAxes: [{
             ticks: {
@@ -37,6 +42,5 @@ options: {
 }
 });
 </script>
-
 </body>
 
