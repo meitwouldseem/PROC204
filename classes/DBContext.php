@@ -59,6 +59,26 @@ class DBContext
 
         return $sleeps;
     }//This function returns spurious data and can be improved
+
+    public function GetSleepRange($Start, $End)
+    {
+        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?)");
+        mysqli_stmt_bind_param($query, "ss", $Start, $End);
+
+        mysqli_stmt_execute($query);
+        $result = mysqli_stmt_get_result($query);
+
+        $data = mysqli_fetch_all($result, MYSQLI_NUM);
+
+        $output = array(array(), array());
+
+        foreach ($data as $value)
+        {
+            array_push($output[0], $value[0]);#labels
+            array_push($output[1], intval($value[2]));#values
+        }
+        return $output;
+    }
 }
 
 ?>
