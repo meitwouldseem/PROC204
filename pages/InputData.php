@@ -1,3 +1,9 @@
+<?php
+
+include_once "header.php";
+
+?>
+
 <body>
     <div class="container">
         <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #7289DA;">
@@ -16,9 +22,6 @@
         </main>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
 </body>
 </html>
 
