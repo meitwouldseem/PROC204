@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: proj-mysql.uopnet.plymouth.ac.uk
--- Generation Time: Mar 13, 2020 at 06:16 PM
+-- Generation Time: Apr 01, 2020 at 08:43 AM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.19
 
@@ -26,6 +26,32 @@ DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `get_Sleep_Range`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Sleep_Range` (IN `Start` DATETIME, IN `End` DATETIME, IN `InputUserID` INT)  NO SQL
+BEGIN
+SELECT SleepStart, SleepEnd, TIMEDIFF(SleepEnd, SleepStart) 
+FROM sleepinstance 
+WHERE InputUserID = UserID
+AND  SleepStart BETWEEN Start and End 
+ORDER BY SleepStart ASC;
+END$$
+
+DROP PROCEDURE IF EXISTS `insert_Event`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_Event` (IN `userID` INT, IN `eventDate` DATETIME, IN `eventTitle` VARCHAR(32), IN `eventDescription` VARCHAR(255))  NO SQL
+BEGIN
+INSERT INTO event
+(userID,eventDate,eventTitle,eventDescription) VALUES
+(userID,eventDate,eventTitle,eventDescription);
+END$$
+
+DROP PROCEDURE IF EXISTS `insert_Sleep`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_Sleep` (IN `userID` INT, IN `sleepStart` DATETIME, IN `sleepEnd` DATETIME, IN `sleepMood` INT)  NO SQL
+BEGIN
+INSERT INTO sleepinstance
+(userID,sleepStart,sleepEnd,sleepMood) VALUES
+(userID,sleepStart,sleepEnd,sleepMood);
+END$$
+
 DROP PROCEDURE IF EXISTS `insert_User`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_User` (IN `EmailAddress` VARCHAR(255), IN `FirstName` VARCHAR(32), IN `LastName` VARCHAR(32), IN `Password` BINARY(32))  NO SQL
 BEGIN
@@ -66,14 +92,19 @@ CREATE TABLE IF NOT EXISTS `sleepinstance` (
   `SleepMood` int(11) NOT NULL,
   PRIMARY KEY (`SleepID`),
   KEY `FK_SleepInstance` (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sleepinstance`
 --
 
 INSERT INTO `sleepinstance` (`SleepID`, `UserID`, `SleepStart`, `SleepEnd`, `SleepMood`) VALUES
-(1, 1, '2020-03-07 06:22:20', '2020-03-08 04:07:05', 5);
+(2, 0, '2020-03-22 20:00:00', '2020-03-23 08:00:00', 1),
+(3, 0, '2020-03-21 18:00:00', '2020-03-22 08:00:00', 5),
+(4, 0, '2020-03-20 18:00:00', '2020-03-21 06:00:00', 6),
+(5, 0, '2020-03-23 19:00:00', '2020-03-24 08:00:00', 3),
+(6, 0, '2020-03-19 21:00:00', '2020-03-20 07:00:00', 7),
+(7, 0, '2020-03-18 20:00:00', '2020-03-19 08:00:00', 4);
 
 -- --------------------------------------------------------
 
@@ -96,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`UserID`, `EmailAddress`, `FirstName`, `LastName`, `Password`) VALUES
-(1, 'bob.mill@plymouth.gov', 'Robert', 'Mill', 0x3132333435000000000000000000000000000000000000000000000000000000);
+(0, 'bob.mill@plymouth.gov', 'Robert', 'Mill', 0x3132333435000000000000000000000000000000000000000000000000000000);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
