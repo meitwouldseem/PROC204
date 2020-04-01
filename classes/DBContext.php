@@ -60,10 +60,10 @@ class DBContext
         return $sleeps;
     }//This function returns spurious data and can be improved
 
-    public function GetSleepRange($Start, $End)
+    public function GetSleepRange($Start, $End, $InputUserID)
     {
-        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?)");
-        mysqli_stmt_bind_param($query, "ss", $Start, $End);
+        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?,?)");
+        mysqli_stmt_bind_param($query, "ssi", $Start, $End, $InputUserID);
 
         mysqli_stmt_execute($query);
         $result = mysqli_stmt_get_result($query);
