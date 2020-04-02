@@ -2,7 +2,7 @@
 
 include_once "header.php";
 
-$graphdata = $db->GetSleepRange("2020-03-19 00:00:00", "2020-03-24 00:00:00");
+$graphdata = $db->GetSleepRange("2020-03-19 00:00:00", "2020-03-24 00:00:00", 0);
 
 ?>
 <body>

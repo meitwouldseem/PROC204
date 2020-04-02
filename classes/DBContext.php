@@ -85,10 +85,10 @@ class DBContext
         return $output;
     }
 
-    public function GetSleepRange($Start, $End, $InputUserID)
+    public function GetSleepRange($Start, $End, $Userid)
     {
-        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?)");
-        mysqli_stmt_bind_param($query, "ss", $Start, $End);
+        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?,?)");
+        mysqli_stmt_bind_param($query, "ssi", $Start, $End, $Userid);
 
         mysqli_stmt_execute($query);
         $result = mysqli_stmt_get_result($query);
