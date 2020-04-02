@@ -60,27 +60,25 @@ class DBContext
         return $sleeps;
     }//This function returns spurious data and can be improved
 
-<<<<<<< Updated upstream
-    public function GetSleepRange($Start, $End)
-=======
+
     public function GetUsersCalenderData($UserID)
     {
-        $query = mysqli_prepare($this->connection, "CALL get_User_Calender(" . $UserID . ")");
+        $query = mysqli_prepare($this->connection, "CALL get_User_Calender(?)");
         mysqli_stmt_bind_param($query,"i", $UserID);
 
         mysqli_stmt_execute($query);
         $result = mysqli_stmt_get_result($query);
 
-        $data = mysqli_fetch_all($result, MYSQLI_NUM);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         $output = array();
 
         foreach($data as $row)
         {
             $output[] = array(
-                'title'   => $row["title"],
-                'start'   => $row["start_event"],
-                'end'   => $row["end_event"]
+                'title'   => $row["Title"],
+                'start'   => $row["StartTime"],
+                'end'   => $row["EndTime"]
             );
         }
 
@@ -88,7 +86,6 @@ class DBContext
     }
 
     public function GetSleepRange($Start, $End, $InputUserID)
->>>>>>> Stashed changes
     {
         $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?)");
         mysqli_stmt_bind_param($query, "ss", $Start, $End);
