@@ -7,6 +7,4 @@
             <a class="btn btn-outline-white" role="button">Settings</a>
         </form>
     </nav>
-    <h1></h1>
-    <h2></h2>
 </div>

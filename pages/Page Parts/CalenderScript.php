@@ -14,6 +14,8 @@ $(document).ready(function() {
       right:'month,agendaWeek,agendaDay'
     },
     events: <?php echo json_encode($calenderData)?>,
+    displayEventTime:true,
+    displayEventEnd:true,
     selectable:true,
     selectHelper:true,
       aspectRatio: 2.1,
