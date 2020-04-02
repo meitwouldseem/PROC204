@@ -39,12 +39,18 @@ class DBContext
         return $users;
     }//This function returns spurious data and can be improved
 
-    public function InsertSleepDatum($SleepID, $UserID, $SleepStart, $SleepEnd, $SleepMood)
+    public function InsertSleepDatum($UserID, $SleepStart, $SleepEnd, $SleepMood)
     {
         $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?,?)");
-        mysqli_stmt_bind_param($query, "iissi", $SleepID, $UserID, $SleepStart, $SleepEnd, $SleepMood);
+        mysqli_stmt_bind_param($query, "issi", $UserID, $SleepStart, $SleepEnd, $SleepMood);
         mysqli_stmt_execute($query);
-    }//Call procedure name in this function is speculative pending implementation of said procedure
+    }
+
+    public function InsertEvent($UserID, $EventTitle, $EventStart, $EventEnd){
+        $query = mysqli_prepare($this->connection, "CALL insert_Event(?,?,?,?)");
+        mysqli_stmt_bind_param($query, "isss", $UserID, $EventTitle, $EventStart, $EventEnd);
+        mysqli_stmt_execute($query);
+    }
 
     public function GetSleepData()
     {
