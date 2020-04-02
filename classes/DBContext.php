@@ -39,10 +39,10 @@ class DBContext
         return $users;
     }//This function returns spurious data and can be improved
 
-    public function InsertSleepDatum($SleepiD, $UserID, $SleepStart, $SleepEnd, $SleepMood)
+    public function InsertSleepDatum($SleepID, $UserID, $SleepStart, $SleepEnd, $SleepMood)
     {
         $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?,?)");
-        mysqli_stmt_bind_param($query, "iissi", $SleepiD, $UserID, $SleepStart, $SleepEnd, $SleepMood);
+        mysqli_stmt_bind_param($query, "iissi", $SleepID, $UserID, $SleepStart, $SleepEnd, $SleepMood);
         mysqli_stmt_execute($query);
     }//Call procedure name in this function is speculative pending implementation of said procedure
 
@@ -60,10 +60,38 @@ class DBContext
         return $sleeps;
     }//This function returns spurious data and can be improved
 
-    public function GetSleepRange($Start, $End, $InputUserID)
+<<<<<<< Updated upstream
+    public function GetSleepRange($Start, $End)
+=======
+    public function GetUsersCalenderData($UserID)
     {
-        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?,?)");
-        mysqli_stmt_bind_param($query, "ssi", $Start, $End, $InputUserID);
+        $query = mysqli_prepare($this->connection, "CALL get_User_Calender(" . $UserID . ")");
+        mysqli_stmt_bind_param($query,"i", $UserID);
+
+        mysqli_stmt_execute($query);
+        $result = mysqli_stmt_get_result($query);
+
+        $data = mysqli_fetch_all($result, MYSQLI_NUM);
+
+        $output = array();
+
+        foreach($data as $row)
+        {
+            $output[] = array(
+                'title'   => $row["title"],
+                'start'   => $row["start_event"],
+                'end'   => $row["end_event"]
+            );
+        }
+
+        return $output;
+    }
+
+    public function GetSleepRange($Start, $End, $InputUserID)
+>>>>>>> Stashed changes
+    {
+        $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?)");
+        mysqli_stmt_bind_param($query, "ss", $Start, $End);
 
         mysqli_stmt_execute($query);
         $result = mysqli_stmt_get_result($query);

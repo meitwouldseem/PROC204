@@ -1,11 +1,21 @@
 <?php
 
 include_once "header.php";
-include_once "Page Parts\TopBar.php";
+
 ?>
 
 <body>
-
+    <div class="container">
+        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #7289DA;">
+            <form class="form-inline">
+                <a class="btn btn-outline-white" role="button">Look at Data</a>
+                <a class="btn btn-outline-white" role="button">Enter Data</a>
+                <a class="btn btn-outline-white" role="button">Settings</a>
+            </form>
+        </nav>
+        <h1></h1>
+        <h2></h2>
+    </div>
 
     <div class="container">
         <main role="main" class="pb-3">

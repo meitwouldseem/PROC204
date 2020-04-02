@@ -1,6 +1,6 @@
 <?php
 
-$connect = new PDO('mysql:host=localhost;dbname=testing', 'root', '');
+$connect = new PDO('mysql:host="proj-mysql.uopnet.plymouth.ac.uk";dbname=prco204_y', 'PRCO204_Y', 'auCw5WTCsg4L66ce');
 
 $data = array();
 
@@ -14,12 +14,11 @@ $result = $statement->fetchAll();
 
 foreach($result as $row)
 {
-    $data[] = array(
-        'id'   => $row["id"],
+    $data[] = [
         'title'   => $row["title"],
         'start'   => $row["start_event"],
         'end'   => $row["end_event"]
-    );
+    ];
 }
 
 echo json_encode($data);

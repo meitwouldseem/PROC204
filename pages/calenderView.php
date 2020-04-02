@@ -1,5 +1,8 @@
 <?php
  include_once "Page Parts\TopBar.php";
+ include_once "../classes/DBContext.php";
+$db = new DBContext();
+$calenderData = $db->GetUsersCalenderData(0);
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,16 +28,17 @@
           center:'title',
           right:'month,agendaWeek,agendaDay'
         },
-        events: 'load.php',
+        events: <?php echo(json_encode($data))?>,
         selectable:true,
         selectHelper:true,
+          aspectRatio: 2.1,
         select: function(start, end, allDay)
         {
           var title = prompt("Enter Event Title");
           if(title)
           {
-            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+            start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+            end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
             $.ajax({
               url:"insert.php",
               type:"POST",
@@ -57,7 +61,7 @@
           $.ajax({
             url:"update.php",
             type:"POST",
-            data:{title:title, start:start, end:end, id:id},
+            data:{title:title, start:start, end:end},
             success:function(){
               calendar.fullCalendar('refetchEvents');
               alert('Event Update');

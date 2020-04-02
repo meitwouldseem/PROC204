@@ -1,8 +1,8 @@
 <?php
 
 include_once "header.php";
-include_once "Page Parts\TopBar.php";
-$graphdata = $db->GetSleepRange("2020-03-19 00:00:00", "2020-03-24 00:00:00", 0);
+
+$graphdata = $db->GetSleepRange("2020-03-19 00:00:00", "2020-03-24 00:00:00");
 
 ?>
 <body>
