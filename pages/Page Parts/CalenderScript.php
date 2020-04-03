@@ -18,25 +18,9 @@ $(document).ready(function() {
     displayEventEnd:true,
     selectable:true,
     selectHelper:true,
-      aspectRatio: 2.1,
-    select: function(start, end, allDay)
-    {
-      var title = prompt("Enter Event Title");
-      if(title)
-      {
-        start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-        end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-        $.ajax({
-          url:"insert.php",
-          type:"POST",
-          data:{title:title, start:start, end:end},
-          success:function()
-          {
-            calendar.fullCalendar('refetchEvents');
-            alert("Added Successfully");
-          }
-        })
-      }
+    aspectRatio: 2.2,
+    select: function openNewActivity(){
+        document.getElementById("newActivityForm").style.display = "block";
     },
     editable:true,
     eventResize:function(event)
