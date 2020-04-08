@@ -1,5 +1,5 @@
 <?php
-include_once "../classes/DBContext.php";
+include_once "../../classes/DBContext.php";
 if(isset($_GET["start"], $_GET["end"]))
 {
     $db = new DBContext();

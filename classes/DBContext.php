@@ -67,28 +67,64 @@ class DBContext
     }//This function returns spurious data and can be improved
 
 
-    public function GetUsersCalenderData($UserID)
+    public function GetUsersCalenderData($UserID, $StartDate, $EndDate)
     {
-        $query = mysqli_prepare($this->connection, "CALL get_User_Calender(?)");
-        mysqli_stmt_bind_param($query,"i", $UserID);
+        $query1 = mysqli_prepare($this->connection, "CALL get_User_Calender_Events(?, ?, ?)") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query1,"iss", $UserID, $StartDate, $EndDate);
 
-        mysqli_stmt_execute($query);
-        $result = mysqli_stmt_get_result($query);
+        mysqli_stmt_execute($query1);
+        $result1 = mysqli_stmt_get_result($query1);
 
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $data = mysqli_fetch_all($result1, MYSQLI_ASSOC);
 
         $output = array();
 
         foreach($data as $row)
         {
             $output[] = array(
+                'id' => "E".$row["ID"],
+                'title'   => $row["Title"],
+                'start'   => $row["StartTime"],
+                'end'   => $row["EndTime"],
+            );
+        }
+
+        $result1->free();
+        $this->connection->next_result();
+        //this is required to prevent errors when calling multiple store procedures.
+
+        $query2 = mysqli_prepare($this->connection, "CALL get_User_Calender_Sleeps(?, ?, ?)") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query2,"iss", $UserID, $StartDate, $EndDate);
+
+        mysqli_stmt_execute($query2);
+        $result2 = mysqli_stmt_get_result($query2);
+
+        $data = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+
+        foreach($data as $row)
+        {
+            $output[] = array(
+                'id' => "S".$row["ID"],
                 'title'   => $row["Title"],
                 'start'   => $row["StartTime"],
                 'end'   => $row["EndTime"]
             );
         }
-
         return $output;
+    }
+
+    public function DeleteEvent($ID)
+    {
+        $query = mysqli_prepare($this->connection, "DELETE FROM event WHERE event.EventID =?") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query,"i", $ID);
+        mysqli_stmt_execute($query);
+    }
+
+    public function DeleteSleep($ID)
+    {
+        $query = mysqli_prepare($this->connection, "DELETE FROM sleepinstance WHERE sleepinstance.SleepID =?") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query,"i", $ID);
+        mysqli_stmt_execute($query);
     }
 
     public function GetSleepRange($Start, $End, $Userid)

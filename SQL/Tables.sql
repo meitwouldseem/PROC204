@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: proj-mysql.uopnet.plymouth.ac.uk
--- Generation Time: Apr 02, 2020 at 06:36 PM
+-- Generation Time: Apr 08, 2020 at 07:55 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.19
 
@@ -36,15 +36,18 @@ AND  SleepStart BETWEEN Start and End
 ORDER BY SleepStart ASC;
 END$$
 
-DROP PROCEDURE IF EXISTS `get_User_Calender`$$
-CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calender` (IN `UserID` INT)  NO SQL
-SELECT 'Sleep' as Title,SleepStart as StartTime,SleepEnd as EndTime
-FROM sleepinstance
-WHERE UserID = UserID
-UNION ALL
-SELECT EventTitle,EventStart,EventEnd 
+DROP PROCEDURE IF EXISTS `get_User_Calender_Events`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calender_Events` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
+SELECT EventTitle as Title,EventStart as StartTime,EventEnd as EndTime,EventID as ID
 FROM event
-WHERE UserID = UserID
+WHERE UserID = UserID AND EventStart > StartDate AND EventStart < EndDate 
+Order by StartTime$$
+
+DROP PROCEDURE IF EXISTS `get_User_Calender_Sleeps`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calender_Sleeps` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
+SELECT 'Sleep' as Title,SleepStart as StartTime,SleepEnd as EndTime,SleepID as ID
+FROM sleepinstance
+WHERE UserID = UserID AND SleepStart > StartDate AND SleepStart < EndDate
 Order by StartTime$$
 
 DROP PROCEDURE IF EXISTS `insert_Event`$$
@@ -86,7 +89,14 @@ CREATE TABLE IF NOT EXISTS `event` (
   `EventEnd` datetime DEFAULT NULL,
   PRIMARY KEY (`EventID`),
   KEY `FK_Event` (`UserID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`EventID`, `UserID`, `EventTitle`, `EventStart`, `EventEnd`) VALUES
+(2, 0, 'Doctor\'s apointment', '2020-03-23 12:00:00', '2020-03-23 13:00:00');
 
 -- --------------------------------------------------------
 
@@ -103,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `sleepinstance` (
   `SleepMood` int(11) NOT NULL,
   PRIMARY KEY (`SleepID`),
   KEY `FK_SleepInstance` (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sleepinstance`
