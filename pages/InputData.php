@@ -3,8 +3,8 @@
 include_once "header.php";
 include_once $_SERVER['DOCUMENT_ROOT'].'/PROC204/classes/DBContext.php';
 
-if( $_GET["SleepStart"] && $_GET["SleepEnd"] && $_GET["ID"] ) {
-    InsertSleepDatum(1, $_GET["ID"], $_GET["SleepStart"],$_GET["SleepEnd"], 1);
+if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["ID"]) ) {
+    $db->InsertSleepDatum($_POST["ID"], $_POST["SleepStart"],$_POST["SleepEnd"], 1);
 }
 ?>
 
@@ -39,7 +39,7 @@ if( $_GET["SleepStart"] && $_GET["SleepEnd"] && $_GET["ID"] ) {
 
 
     <div class="container">
-        <form  method="post">
+        <form  method="post" action="InputData.php">
             <div class="row">
                 <div class="col-3">
                 </div>
