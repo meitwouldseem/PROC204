@@ -1,12 +1,7 @@
 <?php
 
 include_once "header.php";
-include_once $_SERVER['DOCUMENT_ROOT'].'/PROC204/classes/DBContext.php';
 
-if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["ID"]) && false ) {
-    $db->InsertSleepDatum($_POST["ID"], $_POST["SleepStart"],$_POST["SleepEnd"], 1);
-    echo "done";
-}
 ?>
 
 <style>
