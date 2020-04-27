@@ -2,6 +2,16 @@
 
 include_once "header.php";
 
+if (isset($_POST["CreateAccount"]))
+{
+    if (strlen($_POST["password"]) > 5 && strlen($_POST["firstname"]) > 0 && strlen($_POST["surname"]) > 0 && strlen($_POST["email"]) > 0)
+    {
+        $db->InsertUser($_POST["email"], $_POST["firstname"], $_POST["surname"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+    }else{
+        echo "there was something wrong with your details";
+    }
+}
+
 ?>
 
 <style>
