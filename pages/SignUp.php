@@ -29,7 +29,7 @@ include_once "header.php";
     </main>
 </div>
 <div class="container">
-    <form  method="post" action="InputData.php">
+    <form  method="post" action="SignUp.php">
         <div class="row">
             <div class="col-5"></div>
             <div class="input-group input-group-sm mb-3 col-2">
@@ -46,14 +46,34 @@ include_once "header.php";
                 <div class="input-group-prepend">
                     <span class="input-group-text input" id="basic-addon1">Password</span>
                 </div>
-                <input type="password" class="input" name="Rating" style="align-self: center">
+                <input type="password" class="input" name="password" style="align-self: center">
+            </div>
+            <div class="col-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="input-group input-group-sm mb-3 col-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text input" id="basic-addon1">First Name</span>
+                </div>
+                <input type="text" class="input" name="firstname" style="align-self: center">
+            </div>
+            <div class="col-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="input-group input-group-sm mb-3 col-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text input" id="basic-addon1">Surname</span>
+                </div>
+                <input type="text" class="input" name="surname" style="align-self: center">
             </div>
             <div class="col-5"></div>
         </div>
         <div class="row">
             <div class="col-4"></div>
             <div class="col-4 text-center">
-                <input class="btn btn-primary" name="Submit" type="submit" value="Submit">
+                <input class="btn btn-primary" name="CreateAccount" type="submit" value="Create Account">
             </div>
             <div class="col-4"></div>
         </div>
