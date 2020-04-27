@@ -66,6 +66,17 @@ class DBContext
         return $sleeps;
     }//This function returns spurious data and can be improved
 
+    public function GetLoginData($email)
+    {
+        $query = mysqli_prepare($this->connection, "CALL get_Password(?)") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query,"s", $email);
+
+        mysqli_stmt_execute($query);
+        $result = mysqli_stmt_get_result($query);
+
+        $data = mysqli_fetch_all($result, MYSQLI_NUM);
+        return $data;
+    }
 
     public function GetUsersCalenderData($UserID, $StartDate, $EndDate)
     {
