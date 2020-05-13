@@ -13,9 +13,13 @@ if (isset($_POST["Login"]))
             $_SESSION["UserID"] = $data[1];
             echo $data[1];
         }
+        else
+        {
+            echo "<script> window.onload = function () {window.alert(\"Your email and/or password was incorrect.\")} </script>";
+        }
 
     }else{
-        echo "there was something wrong with your details";
+        echo "<script> window.onload = function () {window.alert(\"Your details where invalid.\")} </script>";
     }
 }
 ?>
@@ -29,17 +33,7 @@ if (isset($_POST["Login"]))
 </style>
 
 <body style="background-color: #23272a">
-<div class="container">
-    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #7289DA;">
-        <form class="form-inline">
-            <a class="btn btn-outline-white" role="button">Look at Data</a>
-            <a class="btn btn-outline-white" role="button">Enter Data</a>
-            <a class="btn btn-outline-white" role="button">Settings</a>
-        </form>
-    </nav>
-    <h1></h1>
-    <h2></h2>
-</div>
+<?php include "Page Parts/TopBar.php" ?>
 <div class="container">
     <main role="main" class="pb-3">
     </main>

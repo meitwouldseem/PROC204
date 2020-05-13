@@ -8,7 +8,7 @@ if (isset($_POST["CreateAccount"]))
     {
         $db->InsertUser($_POST["email"], $_POST["firstname"], $_POST["surname"], password_hash($_POST["password"], PASSWORD_DEFAULT));
     }else{
-        echo "there was something wrong with your details";
+        echo "<script> window.onload = function () {window.alert(\"Your details where invalid.\")} </script>";
     }
 }
 
