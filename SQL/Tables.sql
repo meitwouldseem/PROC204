@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: proj-mysql.uopnet.plymouth.ac.uk
--- Generation Time: Apr 08, 2020 at 07:55 PM
+-- Generation Time: May 13, 2020 at 04:37 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.19
 
@@ -26,12 +26,20 @@ DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `get_Password`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Password` (IN `emailaddress` VARCHAR(255))  NO SQL
+BEGIN
+    SELECT Password, UserID
+    FROM user
+    WHERE user.EmailAddress COLLATE utf8_unicode_ci = emailaddress;
+END$$
+
 DROP PROCEDURE IF EXISTS `get_Sleep_Range`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Sleep_Range` (IN `Start` DATETIME, IN `End` DATETIME, IN `Userid` INT)  NO SQL
 BEGIN
 SELECT SleepStart, SleepEnd, TIMEDIFF(SleepEnd, SleepStart) 
 FROM sleepinstance 
-WHERE Userid = UserID
+WHERE sleepinstance.Userid = UserID
 AND  SleepStart BETWEEN Start and End 
 ORDER BY SleepStart ASC;
 END$$
@@ -67,10 +75,16 @@ INSERT INTO sleepinstance
 END$$
 
 DROP PROCEDURE IF EXISTS `insert_User`$$
-CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_User` (IN `EmailAddress` VARCHAR(255), IN `FirstName` VARCHAR(32), IN `LastName` VARCHAR(32), IN `Password` BINARY(32))  NO SQL
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_User` (IN `EmailAddress` VARCHAR(255), IN `FirstName` VARCHAR(32), IN `LastName` VARCHAR(32), IN `Password` VARCHAR(255))  NO SQL
 BEGIN
 insert into User (EmailAddress,FirstName,LastName,Password) values (EmailAddress,FirstName,LastName,Password); 
 END$$
+
+DROP PROCEDURE IF EXISTS `remove_User`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `remove_User` (IN `InputUserID` INT)  NO SQL
+DELETE FROM user
+WHERE
+UserID = InputUserID$$
 
 DELIMITER ;
 
@@ -84,7 +98,7 @@ DROP TABLE IF EXISTS `event`;
 CREATE TABLE IF NOT EXISTS `event` (
   `EventID` int(11) NOT NULL AUTO_INCREMENT,
   `UserID` int(11) NOT NULL,
-  `EventTitle` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `EventTitle` varchar(32) NOT NULL,
   `EventStart` datetime NOT NULL,
   `EventEnd` datetime DEFAULT NULL,
   PRIMARY KEY (`EventID`),
@@ -101,6 +115,20 @@ INSERT INTO `event` (`EventID`, `UserID`, `EventTitle`, `EventStart`, `EventEnd`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `settings`
+--
+
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `SettingsID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `Theme` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`SettingsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sleepinstance`
 --
 
@@ -113,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `sleepinstance` (
   `SleepMood` int(11) NOT NULL,
   PRIMARY KEY (`SleepID`),
   KEY `FK_SleepInstance` (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sleepinstance`
@@ -125,7 +153,8 @@ INSERT INTO `sleepinstance` (`SleepID`, `UserID`, `SleepStart`, `SleepEnd`, `Sle
 (4, 0, '2020-03-20 18:00:00', '2020-03-21 06:00:00', 6),
 (5, 0, '2020-03-23 19:00:00', '2020-03-24 08:00:00', 3),
 (6, 0, '2020-03-19 21:00:00', '2020-03-20 07:00:00', 7),
-(7, 0, '2020-03-18 20:00:00', '2020-03-19 08:00:00', 4);
+(7, 0, '2020-03-18 20:00:00', '2020-03-19 08:00:00', 4),
+(10, 33, '2020-04-10 04:35:00', '2020-04-10 12:35:00', 1);
 
 -- --------------------------------------------------------
 
@@ -139,16 +168,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `EmailAddress` varchar(255) NOT NULL,
   `FirstName` varchar(32) NOT NULL,
   `LastName` varchar(32) NOT NULL,
-  `Password` binary(32) NOT NULL,
+  `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`UserID`, `EmailAddress`, `FirstName`, `LastName`, `Password`) VALUES
-(0, 'bob.mill@plymouth.gov', 'Robert', 'Mill', 0x3132333435000000000000000000000000000000000000000000000000000000);
+(0, 'matburren@gmail.com', 'Matthew', 'Burren', '$2y$10$nFntAQVTh5sHhbWEEnEZYu2TBZBcjVWFTlPTUN6GENJnWAddJaAJO'),
+(3, 'dumy@data.com', 'dummy1', 'dummy1', '$2y$10$SBj8fyO2qmWSHPIqhWMs5utUKGinRQ6iUrVQtU8wkLfzgJPrH3nSe'),
+(4, 'dumy2@data.com', 'dummy2', 'dummy2', '$2y$10$y8JurOIZeZ4/wT/R6KLmLeWJd3sYjwQ5hJzEAZQIZhHXTY2PBnhk2');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
