@@ -7,14 +7,44 @@ $db = new DBContext();
 ?>
 
 <!DOCTYPE html>
+<?php if(isset($_SESSION["UserID"]) and DBContext.GetThemeSetting($_SESSION["UserID"]) == 1): ?>
+        <style>
+            .input {
+                background-color: #ffffbc;
+                color: #ffa200;
+                border-color: #bf6700;
+            }
 
-<style>
-    body {
-        padding-top: 65px;
-        background-color: #2c2f33;
-    }
-</style>
+            .body{
+                    padding-top: 65px;
+                background-color: #ffffbc
+            }
+            .title{
+                    color: #ffa200
+                }
+            }
+        </style>
+<?php else: ?>
+        <style>
+            .input {
+                background-color: #2c2f33;
+                color: #FFFFFF;
+                border-color: #2c2f33;
+            }
 
+            .body{
+                padding-top: 65px;
+                background-color: #23272a
+            }
+            .title{
+                color: #FFFFFF
+            }
+            }
+        </style>
+<?php endif; ?>
+
+
+?>
 <html lang="en">
   
     <head>
@@ -30,6 +60,7 @@ $db = new DBContext();
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
