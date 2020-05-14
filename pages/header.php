@@ -4,6 +4,13 @@ date_default_timezone_set("Europe/London");
 include_once "../classes/DBContext.php";
 
 $db = new DBContext();
+
+session_start();
+
+if (isset($_POST["logout"]))
+{
+    session_destroy();
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +21,6 @@ $db = new DBContext();
                 color: #ffa200;
                 border-color: #bf6700;
             }
-
             .body{
                     padding-top: 65px;
                 background-color: #ffffbc
@@ -31,7 +37,10 @@ $db = new DBContext();
                 color: #FFFFFF;
                 border-color: #2c2f33;
             }
-
+            body {
+                padding-top: 65px;
+                background-color: #23272a;
+            }
             .body{
                 padding-top: 65px;
                 background-color: #23272a
@@ -39,12 +48,10 @@ $db = new DBContext();
             .title{
                 color: #FFFFFF
             }
-            }
+                    }
         </style>
 <?php endif; ?>
 
-
-?>
 <html lang="en">
   
     <head>

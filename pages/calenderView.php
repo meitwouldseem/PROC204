@@ -1,5 +1,12 @@
 <?php
 include_once "header.php";
+
+if (!isset($_SESSION["UserID"]))
+{
+    header("Location: LogIn.php");
+    die();
+}
+
 ?>
 <head>
 <script>
