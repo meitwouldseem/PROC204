@@ -24,13 +24,7 @@ if (isset($_POST["CreateAccount"]))
 
 <body style="background-color: #23272a">
 <div class="container">
-    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #7289DA;">
-        <form class="form-inline">
-            <a class="btn btn-outline-white" role="button">Look at Data</a>
-            <a class="btn btn-outline-white" role="button">Enter Data</a>
-            <a class="btn btn-outline-white" role="button">Settings</a>
-        </form>
-    </nav>
+    <?php include "Page Parts/TopBar.php" ?>
     <h1></h1>
     <h2></h2>
 </div>

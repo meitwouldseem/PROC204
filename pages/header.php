@@ -14,7 +14,7 @@ if (isset($_POST["logout"]))
 ?>
 
 <!DOCTYPE html>
-<?php if(isset($_SESSION["UserID"]) and DBContext.GetThemeSetting($_SESSION["UserID"]) == 1): ?>
+<?php if(isset($_SESSION["UserID"]) and $db->GetThemeSetting($_SESSION["UserID"]) == 1): ?>
         <style>
             .input {
                 background-color: #ffffbc;
@@ -28,6 +28,14 @@ if (isset($_POST["logout"]))
             .title{
                     color: #ffa200
                 }
+            }
+            .darkbody {
+                padding-top: 65px;
+                background-color: #854a00
+            }
+            .lightbody {
+                padding-top: 65px;
+                background-color: #ffffbc
             }
         </style>
 <?php else: ?>
@@ -44,6 +52,14 @@ if (isset($_POST["logout"]))
             .body{
                 padding-top: 65px;
                 background-color: #23272a
+            }
+            .darkbody {
+                padding-top: 65px;
+                background-color: #0d0b1f
+            }
+            .lightbody {
+                padding-top: 65px;
+                background-color: #a09cb5
             }
             .title{
                 color: #FFFFFF

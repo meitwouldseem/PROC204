@@ -3,13 +3,19 @@
 include_once $_SERVER['DOCUMENT_ROOT'].'/PROC204/classes/DBContext.php';
 include_once "header.php";
 
+if (!isset($_SESSION["UserID"]))
+{
+    header("Location: LogIn.php");
+    die();
+}
+
 if( isset($_POST["colour"]) and isset($_SESSION["UserID"])) {
-    DBContext.SetThemeSetting($_SESSION["UserID"], $_POST["colour"]);
+    $db->SetThemeSetting($_SESSION["UserID"], $_POST["colour"]);
 }
 
 if( isset($_POST["delete"])) {
     if(isset($_SESSION["UserID"])){
-        DBContext.DeleteUser($_SESSION["UserID"]);
+        $db->DeleteUser($_SESSION["UserID"]);
     }
     else{
         echo("go to log in page");
@@ -28,7 +34,7 @@ function checkColour($value){
 }
 ?>
 
-<?php if(isset($_SESSION["UserID"]) and DBContext.GetThemeSetting($_SESSION["UserID"]) == 1): ?>
+<?php if(isset($_SESSION["UserID"]) and $db->GetThemeSetting($_SESSION["UserID"]) == 1): ?>
     <style>
         .input {
             background-color: #ffffbc;
@@ -68,15 +74,7 @@ function checkColour($value){
 
 <body class="body">
 <div class="container">
-    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #7289DA;">
-        <form class="form-inline">
-            <a class="btn btn-outline-white" role="button">Look at Data</a>
-            <a class="btn btn-outline-white" role="button">Enter Data</a>
-            <a class="btn btn-outline-white" role="button">Settings</a>
-        </form>
-    </nav>
-    <h1></h1>
-    <h2></h2>
+    <?php include "Page Parts/TopBar.php"; ?>
 </div>
 
 <div class="container">
@@ -95,6 +93,7 @@ function checkColour($value){
             <h1 class="title">Settings</h1>
         </div>
     </div>
+    <!--
     <div class="row">
         <div class="col-2"></div>
             <div class="col-8 text-center">
@@ -114,7 +113,8 @@ function checkColour($value){
                 </form>
             </div>
         </div>
-    </form>
+    </div>
+    -->
     <div class="row">
         <div class="col-3"></div>
             <div class="col-6 text-center">

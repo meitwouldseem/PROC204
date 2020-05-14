@@ -169,7 +169,10 @@ class DBContext
         $query = mysqli_prepare($this->connection, "CALL get_Setting_Theme(?)");
         mysqli_stmt_bind_param($query, "i", $UserID);
         mysqli_stmt_execute($query);
-        return mysqli_stmt_get_result($query);
+        foreach (mysqli_fetch_all(mysqli_stmt_get_result($query)) as $result)
+        {
+            return $result;
+        }
     }
 
     public function SetThemeSetting($UserID, $NewTheme)
