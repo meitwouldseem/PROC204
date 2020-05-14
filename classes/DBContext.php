@@ -41,7 +41,7 @@ class DBContext
 
     public function InsertSleepDatum($UserID, $SleepStart, $SleepEnd, $SleepMood)
     {
-        $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?,?)");
+        $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?)");
         mysqli_stmt_bind_param($query, "issi", $UserID, $SleepStart, $SleepEnd, $SleepMood);
         mysqli_stmt_execute($query);
     }
@@ -138,6 +138,12 @@ class DBContext
         mysqli_stmt_execute($query);
     }
 
+    public function DeleteUser($ID){
+        $query = mysqli_prepare($this->connection, "CALL remove_User(?)");
+        mysqli_stmt_bind_param($query, "i", $ID);
+        mysqli_stmt_execute($query);
+    }
+
     public function GetSleepRange($Start, $End, $Userid)
     {
         $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?,?)");
@@ -157,6 +163,22 @@ class DBContext
         }
         return $output;
     }
+
+    public function GetThemeSetting($UserID)
+    {
+        $query = mysqli_prepare($this->connection, "CALL get_Setting_Theme(?)");
+        mysqli_stmt_bind_param($query, "i", $UserID);
+        mysqli_stmt_execute($query);
+        return mysqli_stmt_get_result($query);
+    }
+
+    public function SetThemeSetting($UserID, $NewTheme)
+    {
+        $query = mysqli_prepare($this->connection, "CALL change_Setting_Theme(?,?)");
+        mysqli_stmt_bind_param($query, "ii", $UserID, $NewTheme);
+        mysqli_stmt_execute($query);
+    }
+
 }
 
 ?>
