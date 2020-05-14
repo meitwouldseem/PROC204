@@ -6,7 +6,7 @@
             <a href="inputData.php" class="btn btn-outline-white" role="button">Enter Data</a>
             <a href="graph.php" class="btn btn-outline-white" role="button">View Graphs</a>
             <a href="calenderView.php" class="btn btn-outline-white" role="button">View Calender</a>
-            <a class="btn btn-outline-white" role="button">Settings</a>
+            <a href="settings.php" class="btn btn-outline-white" role="button">Settings</a>
             <?php if(isset($_SESSION["UserID"])): ?> <input class="btn btn-outline-red" type="submit" name="logout" value="Log out">
             <?php else: ?> <a href="Login.php" class="btn btn-outline-green" role="button">Log in</a> <?php endif; ?>
         </form>

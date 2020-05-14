@@ -18,6 +18,7 @@ $(document).ready(function() {
             center:'title',
             right:'month,agendaWeek,agendaDay'
         },
+
         events: 'CalenderEndpoint/load.php',
         displayEventTime:true,
         displayEventEnd:true,
@@ -53,16 +54,16 @@ $(document).ready(function() {
 </script>
 <link rel="stylesheet" href="../css/ActivityForm.css">
 </head>
-<body>
+<body class="lightbody">
 <?php include "Page Parts/TopBar.php"; ?>
-<h2 align="center">Sleeps and Events</h2>
+<h2 align="center" class ="title">Sleeps and Events</h2>
 <br />
 <div class="container">
   <div id="calendar"></div>
 </div>
 <div class="form-popup" id="newActivityForm">
     <form class="form-container">
-        <h1>New Activity</h1>
+        <h1 class="title">New Activity</h1>
 
         <label for="title"><b>Title</b></label>
         <input type="text" placeholder="Enter Title" name="title" required>
@@ -73,8 +74,8 @@ $(document).ready(function() {
         <label for="endDate"><b>End Time</b></label>
         <input id= "endTime" type="datetime-local" name="endTime" required>
 
-        <button type="submit" class="btn" onclick="" >Add Activity</button>
-        <button type="button" class="btn cancel" onclick="closeActivityForm()">Close</button>
+        <button type="submit" class="btn input" onclick="" >Add Activity</button>
+        <button type="button" class="btn cancel input" onclick="closeActivityForm()">Close</button>
         <script>
             var string = new Date().toISOString().substring(0, 16);
             document.getElementById("startTime").value = string;

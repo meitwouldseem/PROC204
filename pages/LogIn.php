@@ -11,7 +11,7 @@ if (isset($_POST["Login"]))
         if (password_verify($_POST["password"], $data[0]))
         {
             $_SESSION["UserID"] = $data[1];
-            echo $data[1];
+            header("Location: InputData.php");
         }
         else
         {
@@ -21,6 +21,9 @@ if (isset($_POST["Login"]))
     }else{
         echo "<script> window.onload = function () {window.alert(\"Your details where invalid.\")} </script>";
     }
+}
+elseif (isset($_POST["SignUp"])){
+    header("Location: SignUp.php");
 }
 ?>
 
@@ -64,6 +67,14 @@ if (isset($_POST["Login"]))
             <div class="col-4"></div>
             <div class="col-4 text-center">
                 <input class="btn btn-primary" name="Login" type="submit" value="Log in">
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <h1></h1>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+                <input class="btn btn-primary" name="SignUp" type="submit" value="Dont have a login? Sign up">
             </div>
             <div class="col-4"></div>
         </div>

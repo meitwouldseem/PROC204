@@ -2,8 +2,14 @@
 
 include_once "header.php";
 
-if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["ID"]) ) {
-    $db->InsertSleepDatum($_POST["ID"], $_POST["SleepStart"],$_POST["SleepEnd"], 1);
+if (!isset($_SESSION["UserID"]))
+{
+    header("Location: LogIn.php");
+    die();
+}
+
+if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"])  && isset($_POST["Rating"])) {
+    $db->InsertSleepDatum($_SESSION["UserID"], $_POST["SleepStart"],$_POST["SleepEnd"], $_POST["Rating"]);
 }
 ?>
 
@@ -17,15 +23,7 @@ if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["ID
 
 <body style="background-color: #23272a">
     <div class="container">
-        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #7289DA;">
-            <form class="form-inline">
-                <a class="btn btn-outline-white" role="button">Look at Data</a>
-                <a class="btn btn-outline-white" role="button">Enter Data</a>
-                <a class="btn btn-outline-white" role="button">Settings</a>
-            </form>
-        </nav>
-        <h1></h1>
-        <h2></h2>
+        <?php include "Page Parts/TopBar.php"; ?>
     </div>
     <div class="container">
         <main role="main" class="pb-3">
@@ -37,13 +35,13 @@ if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["ID
                 <div class="col-3">
                 </div>
                 <div class="col-3">
-                    <h1 class="text-right" style="color:#FFFFFF">Sleep start</h1>
+                    <h1 class="text-right title">Sleep start</h1>
                     <input type="datetime-local" id="start"
                            name="SleepStart" class="input"
                            style="float:right; clear:both">
                 </div>
                 <div class="col-3">
-                    <h1 class="text-left" style="color:#FFFFFF">Wake up</h1>
+                    <h1 class="text-left title">Wake up</h1>
                     <input type="datetime-local" id="end"
                            name="SleepEnd" class="input">
                 </div>
@@ -52,17 +50,7 @@ if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["ID
                 <div class="col-5"></div>
                 <div class="input-group input-group-sm mb-3 col-2">
                     <div class="input-group-prepend">
-                        <span class="input-group-text input" id="basic-addon1">User ID</span>
-                    </div>
-                    <input type="text" class="input" name="ID" style="align-self: center">
-                </div>
-                <div class="col-5"></div>
-            </div>
-            <div class="row">
-                <div class="col-5"></div>
-                <div class="input-group input-group-sm mb-3 col-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text input" id="basic-addon1">On a scale from 1 to 5 how did you feel when you woke up?</span>
+                        <span class="input-group-text input" id="rate">On a scale from 1 to 5 how did you feel when you woke up?</span>
                     </div>
                     <input type="number" min="1" max="5" class="input" name="Rating" style="align-self: center">
                 </div>
