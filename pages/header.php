@@ -60,7 +60,7 @@ if (isset($_POST["logout"]))
             }
             .lightbody {
                 padding-top: 65px;
-                background-color: #a09cb5
+                background-color: #02DAC5
             }
             .title{
                 color: #FFFFFF
