@@ -36,7 +36,7 @@ if (isset($_POST["logout"]))
             }
             .lightbody {
                 padding-top: 65px;
-                background-color: #ffffbc
+                background-color: #02DAC5
             }
         </style>
 <?php else: ?>
