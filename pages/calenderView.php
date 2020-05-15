@@ -8,6 +8,8 @@ if (!isset($_SESSION["UserID"]))
 }
 if( isset($_POST["EventTitle"]) && isset($_POST["EventStart"])  && isset($_POST["EventEnd"])) {
     $db->InsertEvent($_SESSION["UserID"], $_POST["EventTitle"],$_POST["EventStart"], $_POST["EventEnd"]);
+    header("Location: calenderView.php");
+    return;
 }
 ?>
 <head>
