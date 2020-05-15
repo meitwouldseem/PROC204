@@ -14,8 +14,11 @@ if( isset($_POST["colour"]) and isset($_SESSION["UserID"])) {
 }
 
 if( isset($_POST["delete"])) {
+    echo(1);
     if(isset($_SESSION["UserID"])){
+
         $db->DeleteUser($_SESSION["UserID"]);
+        header("Location: LogIn.php");
     }
     else{
         echo("go to log in page");
@@ -110,7 +113,7 @@ function checkColour($value){
                         <input type="radio" onchange='this.form.submit()' id="colour-light"   name="colour" value ="1" checked="true" >
                         <label for="colour-light" style="color: #ffffff">Light</label><br>
                     <?php endif?>
-                </form>
+                </form>B
             </div>
         </div>
     </div>
@@ -119,9 +122,12 @@ function checkColour($value){
         <div class="col-3"></div>
             <div class="col-6 text-center">
                 <h3 class="text-centre title">Delete profile</h3>
-                <input type="button" id="delete"
-                       name="delete" class="input"
-                       value="Delete profile and ALL data?">
+                <form method="post" action="Settings.php">
+                    <input type="submit"
+                           name="delete" class="input"
+                           value="Delete profile and ALL data?">
+                </form>
+
             </div>
         </div>
     </div>
