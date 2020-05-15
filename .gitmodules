@@ -1,0 +1,3 @@
+[submodule "app/SleepTrackerApp"]
+	path = app/SleepTrackerApp
+	url = https://github.com/rjharris01/sleeptrackerapp.git
