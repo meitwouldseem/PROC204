@@ -7,6 +7,9 @@ if (isset($_POST["CreateAccount"]))
     if (strlen($_POST["password"]) > 5 && strlen($_POST["firstname"]) > 0 && strlen($_POST["surname"]) > 0 && strlen($_POST["email"]) > 0)
     {
         $db->InsertUser($_POST["email"], $_POST["firstname"], $_POST["surname"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+        $data = $db->GetLoginData($_POST["email"])[0];
+        $_SESSION["UserID"] = $data[1];
+        header("Location: InputData.php");
     }else{
         echo "<script> window.onload = function () {window.alert(\"Your details where invalid.\")} </script>";
     }
