@@ -96,28 +96,6 @@ function checkColour($value){
             <h1 class="title">Settings</h1>
         </div>
     </div>
-    <!--
-    <div class="row">
-        <div class="col-2"></div>
-            <div class="col-8 text-center">
-                <h3 class="text-centre title">Colour Scheme</h3>
-                <form  method="post" action="Settings.php">
-                    <?php if (!isset($_POST["colour"]) or $_POST["colour"]=="0"):?>
-                        <input type="radio" onchange='this.form.submit()' id="colour-default" name="colour" value ="0" checked="true" >
-                        <label for="colour-default" style="color: #7289DA" >Default</label><br>
-                        <input type="radio" onchange='this.form.submit()' id="colour-light"   name="colour" value ="1">
-                        <label for="colour-light" style="color: #ffffff">Light</label><br>
-                    <?php else:?>
-                        <input type="radio" onchange='this.form.submit()' id="colour-default" name="colour" value ="0"  >
-                        <label for="colour-default" style="color: #7289DA" >Default</label><br>
-                        <input type="radio" onchange='this.form.submit()' id="colour-light"   name="colour" value ="1" checked="true" >
-                        <label for="colour-light" style="color: #ffffff">Light</label><br>
-                    <?php endif?>
-                </form>B
-            </div>
-        </div>
-    </div>
-    -->
     <div class="row">
         <div class="col-3"></div>
             <div class="col-6 text-center">
