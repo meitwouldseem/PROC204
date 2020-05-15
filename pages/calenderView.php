@@ -6,7 +6,9 @@ if (!isset($_SESSION["UserID"]))
     header("Location: LogIn.php");
     die();
 }
-
+if( isset($_POST["EventTitle"]) && isset($_POST["EventStart"])  && isset($_POST["EventEnd"])) {
+    $db->InsertEvent($_SESSION["UserID"], $_POST["EventTitle"],$_POST["EventStart"], $_POST["EventEnd"]);
+}
 ?>
 <head>
 <script>
@@ -62,19 +64,20 @@ $(document).ready(function() {
   <div id="calendar"></div>
 </div>
 <div class="form-popup" id="newActivityForm">
-    <form class="form-container">
+    <form class="form-container" method="post" action="calenderView.php">
         <h1 class="title">New Activity</h1>
 
         <label for="title"><b>Title</b></label>
-        <input type="text" placeholder="Enter Title" name="title" required>
+        <input type="text" placeholder="Enter Title" name="EventTitle" required>
 
         <label for="startDate"><b>Start Time</b></label>
-        <input id= "startTime" type="datetime-local" name="startTime" required>
+        <input id= "startTime" type="datetime-local" name="EventStart" required>
 
         <label for="endDate"><b>End Time</b></label>
-        <input id= "endTime" type="datetime-local" name="endTime" required>
+        <input id= "endTime" type="datetime-local" name="EventEnd" required>
 
-        <button type="submit" class="btn input" onclick="" >Add Activity</button>
+        <input class="btn input" name="Submit" type="submit" value="Add Activity">
+
         <button type="button" class="btn cancel input" onclick="closeActivityForm()">Close</button>
         <script>
             var string = new Date().toISOString().substring(0, 16);
@@ -83,6 +86,7 @@ $(document).ready(function() {
         </script>
     </form>
 </div>
+
 <script>
     function closeActivityForm(){
         document.getElementById("newActivityForm").style.display = "none";
