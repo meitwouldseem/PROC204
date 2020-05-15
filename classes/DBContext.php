@@ -39,12 +39,18 @@ class DBContext
         return $users;
     }//This function returns spurious data and can be improved
 
-    public function InsertSleepDatum($SleepiD, $UserID, $SleepStart, $SleepEnd, $SleepMood)
+    public function InsertSleepDatum($UserID, $SleepStart, $SleepEnd, $SleepMood)
     {
-        $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?,?)");
-        mysqli_stmt_bind_param($query, "iissi", $SleepiD, $UserID, $SleepStart, $SleepEnd, $SleepMood);
+        $query = mysqli_prepare($this->connection, "CALL insert_Sleep(?,?,?,?)");
+        mysqli_stmt_bind_param($query, "issi", $UserID, $SleepStart, $SleepEnd, $SleepMood);
         mysqli_stmt_execute($query);
-    }//Call procedure name in this function is speculative pending implementation of said procedure
+    }
+
+    public function InsertEvent($UserID, $EventTitle, $EventStart, $EventEnd){
+        $query = mysqli_prepare($this->connection, "CALL insert_Event(?,?,?,?)");
+        mysqli_stmt_bind_param($query, "isss", $UserID, $EventTitle, $EventStart, $EventEnd);
+        mysqli_stmt_execute($query);
+    }
 
     public function GetSleepData()
     {
@@ -60,10 +66,88 @@ class DBContext
         return $sleeps;
     }//This function returns spurious data and can be improved
 
-    public function GetSleepRange($Start, $End, $InputUserID)
+    public function GetLoginData($email)
+    {
+        $query = mysqli_prepare($this->connection, "CALL get_Password(?)") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query,"s", $email);
+
+        mysqli_stmt_execute($query);
+        $result = mysqli_stmt_get_result($query);
+
+        $data = mysqli_fetch_all($result, MYSQLI_NUM);
+        return $data;
+    }
+
+    public function GetUsersCalenderData($UserID, $StartDate, $EndDate)
+    {
+        $query1 = mysqli_prepare($this->connection, "CALL get_User_Calender_Events(?, ?, ?)") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query1,"iss", $UserID, $StartDate, $EndDate);
+
+        mysqli_stmt_execute($query1);
+        $result1 = mysqli_stmt_get_result($query1);
+
+        $data = mysqli_fetch_all($result1, MYSQLI_ASSOC);
+
+        $output = array();
+
+        foreach($data as $row)
+        {
+            $output[] = array(
+                'id' => "E".$row["ID"],
+                'title'   => $row["Title"],
+                'start'   => $row["StartTime"],
+                'end'   => $row["EndTime"],
+            );
+        }
+
+        $result1->free();
+        $this->connection->next_result();
+        //this is required to prevent errors when calling multiple store procedures.
+
+        $query2 = mysqli_prepare($this->connection, "CALL get_User_Calender_Sleeps(?, ?, ?)") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query2,"iss", $UserID, $StartDate, $EndDate);
+
+        mysqli_stmt_execute($query2);
+        $result2 = mysqli_stmt_get_result($query2);
+
+        $data = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+
+        foreach($data as $row)
+        {
+            $output[] = array(
+                'id' => "S".$row["ID"],
+                'title'   => $row["Title"],
+                'start'   => $row["StartTime"],
+                'end'   => $row["EndTime"]
+            );
+        }
+        return $output;
+    }
+
+    public function DeleteEvent($ID)
+    {
+        $query = mysqli_prepare($this->connection, "DELETE FROM event WHERE event.EventID =?") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query,"i", $ID);
+        mysqli_stmt_execute($query);
+    }
+
+    public function DeleteSleep($ID)
+    {
+        $query = mysqli_prepare($this->connection, "DELETE FROM sleepinstance WHERE sleepinstance.SleepID =?") or die(mysqli_error($this->connection));
+        mysqli_stmt_bind_param($query,"i", $ID);
+        mysqli_stmt_execute($query);
+    }
+
+    public function DeleteUser($ID){
+        $query = mysqli_prepare($this->connection, "CALL remove_User(?)");
+        mysqli_stmt_bind_param($query, "i", $ID);
+        mysqli_stmt_execute($query);
+    }
+
+    public function GetSleepRange($Start, $End, $Userid)
     {
         $query = mysqli_prepare($this->connection, "CALL get_Sleep_Range(?,?,?)");
-        mysqli_stmt_bind_param($query, "ssi", $Start, $End, $InputUserID);
+        mysqli_stmt_bind_param($query, "ssi", $Start, $End, $Userid);
 
         mysqli_stmt_execute($query);
         $result = mysqli_stmt_get_result($query);
@@ -79,6 +163,25 @@ class DBContext
         }
         return $output;
     }
+
+    public function GetThemeSetting($UserID)
+    {
+        $query = mysqli_prepare($this->connection, "CALL get_Setting_Theme(?)");
+        mysqli_stmt_bind_param($query, "i", $UserID);
+        mysqli_stmt_execute($query);
+        foreach (mysqli_fetch_all(mysqli_stmt_get_result($query)) as $result)
+        {
+            return $result;
+        }
+    }
+
+    public function SetThemeSetting($UserID, $NewTheme)
+    {
+        $query = mysqli_prepare($this->connection, "CALL change_Setting_Theme(?,?)");
+        mysqli_stmt_bind_param($query, "ii", $UserID, $NewTheme);
+        mysqli_stmt_execute($query);
+    }
+
 }
 
 ?>
