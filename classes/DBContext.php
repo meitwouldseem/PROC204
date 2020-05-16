@@ -52,6 +52,12 @@ class DBContext
         mysqli_stmt_execute($query);
     }
 
+    public function InsertSettings($UserID){
+	    $query = mysqli_prepare($this->connection, "CALL insert_Settings(?)");
+        mysqli_stmt_bind_param($query, "i", $UserID);
+        mysqli_stmt_execute($query);
+    }
+
     public function GetSleepData()
     {
         $query = mysqli_query($this->connection, "SELECT * FROM SleepInstance")

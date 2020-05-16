@@ -1,6 +1,11 @@
 <?php
 
 include_once "header.php";
+if (isset($_SESSION["UserID"]))
+{
+    header("Location: InputData.php");
+    die();
+}
 
 if (isset($_POST["CreateAccount"]))
 {
@@ -8,6 +13,7 @@ if (isset($_POST["CreateAccount"]))
     {
         $db->InsertUser($_POST["email"], $_POST["firstname"], $_POST["surname"], password_hash($_POST["password"], PASSWORD_DEFAULT));
         $data = $db->GetLoginData($_POST["email"])[0];
+        $db->InsertSettings($data[1]);
         $_SESSION["UserID"] = $data[1];
         header("Location: InputData.php");
     }else{

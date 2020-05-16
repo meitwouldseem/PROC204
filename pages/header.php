@@ -15,7 +15,7 @@ if (isset($_POST["logout"]))
 ?>
 
 <!DOCTYPE html>
-<?php if(isset($_SESSION["UserID"]) and $db->GetThemeSetting($_SESSION["UserID"]) == 1): ?>
+<?php if(isset($_SESSION["UserID"]) and $_SESSION["UserID"] != null and $db->GetThemeSetting($_SESSION["UserID"]) == 1): ?>
         <style>
             .input {
                 background-color: #ffffbc;

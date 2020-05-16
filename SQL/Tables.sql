@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: proj-mysql.uopnet.plymouth.ac.uk
--- Generation Time: May 13, 2020 at 04:37 PM
+-- Generation Time: May 16, 2020 at 10:31 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.19
 
@@ -26,6 +26,13 @@ DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `change_Theme_Setting`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `change_Theme_Setting` (IN `userID` INT, IN `newTheme` INT)  BEGIN
+UPDATE settings
+SET Theme = newTheme
+WHERE UserID = userID;
+END$$
+
 DROP PROCEDURE IF EXISTS `get_Password`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Password` (IN `emailaddress` VARCHAR(255))  NO SQL
 BEGIN
@@ -66,6 +73,12 @@ INSERT INTO event
 (userID,eventTitle,eventStart,eventEnd);
 END$$
 
+DROP PROCEDURE IF EXISTS `insert_Settings`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_Settings` (IN `UserID` INT)  NO SQL
+BEGIN
+insert into settings (UserID,Theme) values (UserID,0); 
+END$$
+
 DROP PROCEDURE IF EXISTS `insert_Sleep`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `insert_Sleep` (IN `userID` INT, IN `sleepStart` DATETIME, IN `sleepEnd` DATETIME, IN `sleepMood` INT)  NO SQL
 BEGIN
@@ -102,15 +115,8 @@ CREATE TABLE IF NOT EXISTS `event` (
   `EventStart` datetime NOT NULL,
   `EventEnd` datetime DEFAULT NULL,
   PRIMARY KEY (`EventID`),
-  KEY `FK_Event` (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `event`
---
-
-INSERT INTO `event` (`EventID`, `UserID`, `EventTitle`, `EventStart`, `EventEnd`) VALUES
-(2, 0, 'Doctor\'s apointment', '2020-03-23 12:00:00', '2020-03-23 13:00:00');
+  KEY `FK_Event_Cascade` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -123,8 +129,16 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `SettingsID` int(11) NOT NULL AUTO_INCREMENT,
   `UserID` int(11) NOT NULL,
   `Theme` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`SettingsID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`SettingsID`),
+  KEY `FK_Settings_Cascade` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`SettingsID`, `UserID`, `Theme`) VALUES
+(2, 21, 0);
 
 -- --------------------------------------------------------
 
@@ -140,21 +154,8 @@ CREATE TABLE IF NOT EXISTS `sleepinstance` (
   `SleepEnd` datetime NOT NULL,
   `SleepMood` int(11) NOT NULL,
   PRIMARY KEY (`SleepID`),
-  KEY `FK_SleepInstance` (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `sleepinstance`
---
-
-INSERT INTO `sleepinstance` (`SleepID`, `UserID`, `SleepStart`, `SleepEnd`, `SleepMood`) VALUES
-(2, 0, '2020-03-22 20:00:00', '2020-03-23 08:00:00', 1),
-(3, 0, '2020-03-21 18:00:00', '2020-03-22 08:00:00', 5),
-(4, 0, '2020-03-20 18:00:00', '2020-03-21 06:00:00', 6),
-(5, 0, '2020-03-23 19:00:00', '2020-03-24 08:00:00', 3),
-(6, 0, '2020-03-19 21:00:00', '2020-03-20 07:00:00', 7),
-(7, 0, '2020-03-18 20:00:00', '2020-03-19 08:00:00', 4),
-(10, 33, '2020-04-10 04:35:00', '2020-04-10 12:35:00', 1);
+  KEY `FK_SleepInstance_Cascade` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -170,16 +171,36 @@ CREATE TABLE IF NOT EXISTS `user` (
   `LastName` varchar(32) NOT NULL,
   `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`UserID`, `EmailAddress`, `FirstName`, `LastName`, `Password`) VALUES
-(0, 'matburren@gmail.com', 'Matthew', 'Burren', '$2y$10$nFntAQVTh5sHhbWEEnEZYu2TBZBcjVWFTlPTUN6GENJnWAddJaAJO'),
-(3, 'dumy@data.com', 'dummy1', 'dummy1', '$2y$10$SBj8fyO2qmWSHPIqhWMs5utUKGinRQ6iUrVQtU8wkLfzgJPrH3nSe'),
-(4, 'dumy2@data.com', 'dummy2', 'dummy2', '$2y$10$y8JurOIZeZ4/wT/R6KLmLeWJd3sYjwQ5hJzEAZQIZhHXTY2PBnhk2');
+(21, 'test@test.com', 'test', 'test', '$2y$10$wIiiczUEti1hCGkWlpUSyuT7LYPOT6/GZFvOtvYOLu01ZWG7WCg0q');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `event`
+--
+ALTER TABLE `event`
+  ADD CONSTRAINT `FK_Event_Cascade` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `settings`
+--
+ALTER TABLE `settings`
+  ADD CONSTRAINT `FK_Settings_Cascade` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `sleepinstance`
+--
+ALTER TABLE `sleepinstance`
+  ADD CONSTRAINT `FK_SleepInstance_Cascade` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
