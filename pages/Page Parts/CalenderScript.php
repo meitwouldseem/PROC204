@@ -1,5 +1,5 @@
 <?php
-$calenderData = $db->GetUsersCalenderData($_SESSION["UserID"]);
+$calenderData = $db->GetUsersCalendarData($_SESSION["UserID"]);
 ?>
 
 <head>

@@ -83,9 +83,9 @@ class DBContext
         return mysqli_fetch_all($result, MYSQLI_NUM);
     }
 
-    public function GetUsersCalenderData($UserID, $StartDate, $EndDate)
+    public function GetUsersCalendarData($UserID, $StartDate, $EndDate)
     {
-        $query1 = mysqli_prepare($this->connection, "CALL get_User_Calender_Events(?, ?, ?)") or die(mysqli_error($this->connection));
+        $query1 = mysqli_prepare($this->connection, "CALL get_User_Calendar_Events(?, ?, ?)") or die(mysqli_error($this->connection));
         mysqli_stmt_bind_param($query1,"iss", $UserID, $StartDate, $EndDate);
 
         mysqli_stmt_execute($query1);
@@ -109,7 +109,7 @@ class DBContext
         $this->connection->next_result();
         //this is required to prevent errors when calling multiple store procedures.
 
-        $query2 = mysqli_prepare($this->connection, "CALL get_User_Calender_Sleeps(?, ?, ?)") or die(mysqli_error($this->connection));
+        $query2 = mysqli_prepare($this->connection, "CALL get_User_Calendar_Sleeps(?, ?, ?)") or die(mysqli_error($this->connection));
         mysqli_stmt_bind_param($query2,"iss", $UserID, $StartDate, $EndDate);
 
         mysqli_stmt_execute($query2);
