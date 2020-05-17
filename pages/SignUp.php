@@ -15,6 +15,8 @@ if (isset($_POST["CreateAccount"]))
         $data = $db->GetLoginData($_POST["email"])[0];
         $db->InsertSettings($data[1]);
         $_SESSION["UserID"] = $data[1];
+        $_SESSION["FirstName"] = $data[2];
+        $_SESSION["LastName"] = $data[3];
         header("Location: InputData.php");
     }else{
         echo "<script> window.onload = function () {window.alert(\"Your details where invalid.\")} </script>";

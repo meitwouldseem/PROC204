@@ -74,14 +74,13 @@ class DBContext
 
     public function GetLoginData($email)
     {
-        $query = mysqli_prepare($this->connection, "CALL get_Password(?)") or die(mysqli_error($this->connection));
+        $query = mysqli_prepare($this->connection, "CALL get_LogIn_Info(?)") or die(mysqli_error($this->connection));
         mysqli_stmt_bind_param($query,"s", $email);
 
         mysqli_stmt_execute($query);
         $result = mysqli_stmt_get_result($query);
 
-        $data = mysqli_fetch_all($result, MYSQLI_NUM);
-        return $data;
+        return mysqli_fetch_all($result, MYSQLI_NUM);
     }
 
     public function GetUsersCalenderData($UserID, $StartDate, $EndDate)
@@ -175,10 +174,8 @@ class DBContext
         $query = mysqli_prepare($this->connection, "CALL get_Setting_Theme(?)");
         mysqli_stmt_bind_param($query, "i", $UserID);
         mysqli_stmt_execute($query);
-        foreach (mysqli_fetch_all(mysqli_stmt_get_result($query)) as $result)
-        {
-            return $result;
-        }
+        $result = mysqli_stmt_get_result($query);
+        return mysqli_fetch_all($result, MYSQLI_NUM);
     }
 
     public function SetThemeSetting($UserID, $NewTheme)
@@ -189,5 +186,3 @@ class DBContext
     }
 
 }
-
-?>

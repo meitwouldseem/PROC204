@@ -16,6 +16,8 @@ if (isset($_POST["Login"]))
         if (password_verify($_POST["password"], $data[0]))
         {
             $_SESSION["UserID"] = $data[1];
+            $_SESSION["FirstName"] = $data[2];
+            $_SESSION["LastName"] = $data[3];
             header("Location: InputData.php");
         }
         else
