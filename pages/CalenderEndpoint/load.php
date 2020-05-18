@@ -3,7 +3,7 @@ include_once "../../classes/DBContext.php";
 if(isset($_GET["start"], $_GET["end"]))
 {
     $db = new DBContext();
-    echo json_encode($db->GetUsersCalendarData($_SESSION["userID"], $_GET["start"], $_GET["end"]));
+    echo json_encode($db->GetUsersCalendarData($_SESSION["UserID"], $_GET["start"], $_GET["end"]));
 }
 else
 {
