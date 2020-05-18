@@ -1,5 +1,8 @@
 <?php
 include_once "../../classes/DBContext.php";
+
+session_start();
+
 if(isset($_GET["start"], $_GET["end"]))
 {
     $db = new DBContext();
