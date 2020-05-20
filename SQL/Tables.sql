@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: proj-mysql.uopnet.plymouth.ac.uk
--- Generation Time: May 16, 2020 at 10:31 PM
+-- Generation Time: May 20, 2020 at 03:28 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.19
 
@@ -33,13 +33,19 @@ SET Theme = newTheme
 WHERE UserID = userID;
 END$$
 
-DROP PROCEDURE IF EXISTS `get_Password`$$
-CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Password` (IN `emailaddress` VARCHAR(255))  NO SQL
+DROP PROCEDURE IF EXISTS `get_LogIn_Info`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_LogIn_Info` (IN `emailaddress` VARCHAR(255))  NO SQL
 BEGIN
-    SELECT Password, UserID
+    SELECT Password, user.UserID, FirstName, LastName, settings.Theme
     FROM user
+    LEFT JOIN settings ON user.UserID = settings.UserID
     WHERE user.EmailAddress COLLATE utf8_unicode_ci = emailaddress;
 END$$
+
+DROP PROCEDURE IF EXISTS `get_Setting_Theme`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Setting_Theme` (IN `InUserID` INT)  NO SQL
+SELECT Theme FROM settings
+WHERE UserID = InUserID$$
 
 DROP PROCEDURE IF EXISTS `get_Sleep_Range`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_Sleep_Range` (IN `Start` DATETIME, IN `End` DATETIME, IN `Userid` INT)  NO SQL
@@ -51,15 +57,15 @@ AND  SleepStart BETWEEN Start and End
 ORDER BY SleepStart ASC;
 END$$
 
-DROP PROCEDURE IF EXISTS `get_User_Calender_Events`$$
-CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calender_Events` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
+DROP PROCEDURE IF EXISTS `get_User_Calendar_Events`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calendar_Events` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
 SELECT EventTitle as Title,EventStart as StartTime,EventEnd as EndTime,EventID as ID
 FROM event
 WHERE UserID = UserID AND EventStart > StartDate AND EventStart < EndDate 
 Order by StartTime$$
 
-DROP PROCEDURE IF EXISTS `get_User_Calender_Sleeps`$$
-CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calender_Sleeps` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
+DROP PROCEDURE IF EXISTS `get_User_Calendar_Sleeps`$$
+CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calendar_Sleeps` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
 SELECT 'Sleep' as Title,SleepStart as StartTime,SleepEnd as EndTime,SleepID as ID
 FROM sleepinstance
 WHERE UserID = UserID AND SleepStart > StartDate AND SleepStart < EndDate
@@ -116,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `EventEnd` datetime DEFAULT NULL,
   PRIMARY KEY (`EventID`),
   KEY `FK_Event_Cascade` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -131,14 +137,14 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `Theme` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`SettingsID`),
   KEY `FK_Settings_Cascade` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`SettingsID`, `UserID`, `Theme`) VALUES
-(2, 21, 0);
+(4, 24, 0);
 
 -- --------------------------------------------------------
 
@@ -155,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `sleepinstance` (
   `SleepMood` int(11) NOT NULL,
   PRIMARY KEY (`SleepID`),
   KEY `FK_SleepInstance_Cascade` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -170,15 +176,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `FirstName` varchar(32) NOT NULL,
   `LastName` varchar(32) NOT NULL,
   `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `EmailAddress` (`EmailAddress`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`UserID`, `EmailAddress`, `FirstName`, `LastName`, `Password`) VALUES
-(21, 'test@test.com', 'test', 'test', '$2y$10$wIiiczUEti1hCGkWlpUSyuT7LYPOT6/GZFvOtvYOLu01ZWG7WCg0q');
+(24, 'test@test.com', 'test', 'test', '$2y$10$jrkKW1UAuPAb4Ne.0W9HFuoBcK2VxAKVvgHG3VqrmD.kYMDDPWSeW');
 
 --
 -- Constraints for dumped tables
