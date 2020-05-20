@@ -9,7 +9,7 @@ if (!isset($_SESSION["UserID"]))
     die();
 }
 
-$graphdata = $db->GetSleepRange("2020-03-19 00:00:00", "2020-03-24 00:00:00", $_SESSION["UserID"]);
+$graphdata = $db->GetSleepRange(date("Y-m-d H:m:s",strtotime("-5 days")), date("Y-m-d H:m:s",strtotime("-0 days")), $_SESSION["UserID"]);
 
 ?>
 <body class="darkbody">
