@@ -1,6 +1,5 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'].'/PROC204/classes/DBContext.php';
 include_once "header.php";
 
 if (!isset($_SESSION["UserID"]))
