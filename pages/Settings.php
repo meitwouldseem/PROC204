@@ -17,7 +17,10 @@ if( isset($_POST["delete"])) {
     if(isset($_SESSION["UserID"])){
 
         $db->DeleteUser($_SESSION["UserID"]);
+        $_SESSION = array();
+        session_destroy();
         header("Location: LogIn.php");
+
     }
     else{
         echo("go to log in page");

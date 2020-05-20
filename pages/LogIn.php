@@ -11,17 +11,18 @@ if (isset($_POST["Login"]))
 {
     if (strlen($_POST["password"]) > 5 && strlen($_POST["email"]) > 0)
     {
-        $data = $db->GetLoginData($_POST["email"])[0];
-
-        if (password_verify($_POST["password"], $data[0]))
-        {
-            $_SESSION["UserID"] = $data[1];
-            $_SESSION["FirstName"] = $data[2];
-            $_SESSION["LastName"] = $data[3];
-            header("Location: InputData.php");
-        }
-        else
-        {
+        $data = $db->GetLoginData($_POST["email"]);
+        if($data != null) {
+            $data = $data[0];
+            if (password_verify($_POST["password"], $data[0])) {
+                $_SESSION["UserID"] = $data[1];
+                $_SESSION["FirstName"] = $data[2];
+                $_SESSION["LastName"] = $data[3];
+                header("Location: InputData.php");
+            } else {
+                echo "<script> window.onload = function () {window.alert(\"Your email and/or password was incorrect.\")} </script>";
+            }
+        } else {
             echo "<script> window.onload = function () {window.alert(\"Your email and/or password was incorrect.\")} </script>";
         }
 
