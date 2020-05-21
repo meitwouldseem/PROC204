@@ -35,27 +35,27 @@ APP View Mood Data
 
 
 
-WEB Calander\n
+WEB Calander                                                                        
 ![ScreenShot9](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Calendar.png?raw=true)
 
 
-WEB Graph\n
+WEB Graph
 ![ScreenShot10](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Graph.png?raw=true)
 
 
-WEB Input Data Calander\n
+WEB Input Data Calander
 ![ScreenShot11](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Input%20data%20calendar.png?raw=true)
 
 
-WEB Input Data\n
+WEB Input Data
 ![ScreenShot12](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Input%20data.png?raw=true)
 
 
-WEB Log In\n
+WEB Log In
 ![ScreenShot13](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Log%20in.png?raw=true)
 
 
-WEB Sign up\n
+WEB Sign up
 ![ScreenShot14](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Sign%20up.png?raw=true)
 
 Summary:
