@@ -35,37 +35,37 @@ APP View Mood Data
 
 
 
-WEB Calander
+WEB Calander\n
 ![ScreenShot9](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Calendar.png?raw=true)
 
 
-WEB Graph
+WEB Graph\n
 ![ScreenShot10](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Graph.png?raw=true)
 
 
-WEB Input Data Calander
+WEB Input Data Calander\n
 ![ScreenShot11](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Input%20data%20calendar.png?raw=true)
 
 
-WEB Input Data
+WEB Input Data\n
 ![ScreenShot12](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Input%20data.png?raw=true)
 
 
-WEB Log In
+WEB Log In\n
 ![ScreenShot13](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Log%20in.png?raw=true)
 
 
-WEB Sign up
+WEB Sign up\n
 ![ScreenShot14](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Sign%20up.png?raw=true)
 
 Summary:
 Fullstack application for tracking sleep data and calander events with both mobile application and a web application. 
 
-Authors:
-Oliver Hamilton (ItsMeOl1)
-Hayden Davies   (EspowHD)
-Matthew Burren  (meitwouldseem)
-Richard Harris  (rjharris01)
+Authors:\n
+Oliver Hamilton (ItsMeOl1)\n
+Hayden Davies   (EspowHD)\n
+Matthew Burren  (meitwouldseem)\n
+Richard Harris  (rjharris01)\n
 
 Contents
 SQL                                #Exported final version of our working database
