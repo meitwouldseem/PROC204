@@ -9,9 +9,17 @@ if (!isset($_SESSION["UserID"]))
 }
 
 if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"])  && isset($_POST["Rating"])) {
-    $db->InsertSleepDatum($_SESSION["UserID"], $_POST["SleepStart"],$_POST["SleepEnd"], $_POST["Rating"]);
-    header("Location: InputData.php");
-    return;
+    if(strtotime($_POST["SleepStart"])<strtotime($_POST["SleepEnd"])) {
+        if(0<$_POST["Rating"] && $_POST["Rating"]<6) {
+            $db->InsertSleepDatum($_SESSION["UserID"], $_POST["SleepStart"], $_POST["SleepEnd"], $_POST["Rating"]);
+            header("Location: InputData.php");
+            return;
+        } else {
+            echo "<script> window.onload = function () {window.alert(\"The sleep rating must be between 1-5\")} </script>";
+        }
+    } else {
+        echo "<script> window.onload = function () {window.alert(\"The sleep start must be less than sleep end\")} </script>";
+    }
 }
 ?>
 
@@ -54,7 +62,7 @@ if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"])  && isset($_POST["R
                     <div class="input-group-prepend">
                         <span class="input-group-text input" id="rate">On a scale from 1 to 5 how did you feel when you woke up?</span>
                     </div>
-                    <input type="number" min="1" max="5" class="input" name="Rating" style="align-self: center">
+                    <input type="number" min="1" max="5" value="3" class="input" name="Rating" style="align-self: center">
                 </div>
                 <div class="col-5"></div>
             </div>
