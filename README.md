@@ -68,13 +68,13 @@ Matthew Burren  (meitwouldseem)<br/>
 Richard Harris  (rjharris01)<br/>
 
 Contents
-SQL                                #Exported final version of our working database
-app                                #Submodule for the mobile application
-classes                            #Contains DBContext.php
-css                                #Contains css for webpage
-pages                              #Contains the php pages stored on the web server that deal with handling the mobile application                                           aswell as the web application 
-screenshots                        #Contains screens shots the solution 
-.gitmodules                        #Contains module data
+SQL                                #Exported final version of our working database<br/>
+app                                #Submodule for the mobile application<br/>
+classes                            #Contains DBContext.php<br/>
+css                                #Contains css for webpage<br/>
+pages                              #Contains the php pages stored on the web server that deal with handling the mobile application <br/>                                          aswell as the web application 
+screenshots                        #Contains screens shots the solution<br/>
+.gitmodules                        #Contains module data<br/>
 
 
 
