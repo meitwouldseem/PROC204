@@ -11,13 +11,18 @@ if (isset($_POST["CreateAccount"]))
 {
     if (strlen($_POST["password"]) > 5 && strlen($_POST["firstname"]) > 0 && strlen($_POST["surname"]) > 0 && strlen($_POST["email"]) > 0)
     {
-        $db->InsertUser($_POST["email"], $_POST["firstname"], $_POST["surname"], password_hash($_POST["password"], PASSWORD_DEFAULT));
-        $data = $db->GetLoginData($_POST["email"])[0];
-        $db->InsertSettings($data[1]);
-        $_SESSION["UserID"] = $data[1];
-        $_SESSION["FirstName"] = $data[2];
-        $_SESSION["LastName"] = $data[3];
-        header("Location: InputData.php");
+        $IsEmail = $db->CheckEmail($_POST["email"])[0][0];
+        if($IsEmail == 0) {
+            $db->InsertUser($_POST["email"], $_POST["firstname"], $_POST["surname"], password_hash($_POST["password"], PASSWORD_DEFAULT));
+            $data = $db->GetLoginData($_POST["email"])[0];
+            $db->InsertSettings($data[1]);
+            $_SESSION["UserID"] = $data[1];
+            $_SESSION["FirstName"] = $data[2];
+            $_SESSION["LastName"] = $data[3];
+            header("Location: InputData.php");
+        } else{
+            echo "<script> window.onload = function () {window.alert(\"This email is already in use\")} </script>";
+        }
     }else{
         echo "<script> window.onload = function () {window.alert(\"Your details where invalid.\")} </script>";
     }

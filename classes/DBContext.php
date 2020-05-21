@@ -169,6 +169,15 @@ class DBContext
         return $output;
     }
 
+    public function CheckEmail($Email)
+    {
+        $query = mysqli_prepare($this->connection, "CALL check_For_Email(?)");
+        mysqli_stmt_bind_param($query, "s", $Email);
+        mysqli_stmt_execute($query);
+        $result = mysqli_stmt_get_result($query);
+        return mysqli_fetch_all($result, MYSQLI_NUM);
+    }
+
     public function GetThemeSetting($UserID)
     {
         $query = mysqli_prepare($this->connection, "CALL get_Setting_Theme(?)");
