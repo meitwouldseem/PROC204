@@ -35,46 +35,46 @@ APP View Mood Data
 
 
 
-WEB Calander                                                                        
+WEB Calander<br/>                                                                    
 ![ScreenShot9](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Calendar.png?raw=true)
 
 
-WEB Graph
+WEB Graph<br/>
 ![ScreenShot10](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Graph.png?raw=true)
 
 
-WEB Input Data Calander
+WEB Input Data Calander<br/>
 ![ScreenShot11](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Input%20data%20calendar.png?raw=true)
 
 
-WEB Input Data
+WEB Input Data<br/>
 ![ScreenShot12](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Input%20data.png?raw=true)
 
 
-WEB Log In
+WEB Log In<br/>
 ![ScreenShot13](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Log%20in.png?raw=true)
 
 
-WEB Sign up
+WEB Sign up<br/>
 ![ScreenShot14](https://github.com/meitwouldseem/PROC204/blob/master/screenshots/Web/Sign%20up.png?raw=true)
 
 Summary:
 Fullstack application for tracking sleep data and calander events with both mobile application and a web application. 
 
-Authors:\n
-Oliver Hamilton (ItsMeOl1)\n
-Hayden Davies   (EspowHD)\n
-Matthew Burren  (meitwouldseem)\n
-Richard Harris  (rjharris01)\n
+Authors:<br/>
+Oliver Hamilton (ItsMeOl1)<br/>
+Hayden Davies   (EspowHD)<br/>
+Matthew Burren  (meitwouldseem)<br/>
+Richard Harris  (rjharris01)<br/>
 
 Contents
 SQL                                #Exported final version of our working database
 app                                #Submodule for the mobile application
 classes                            #Contains DBContext.php
-css                                #containts css for webpage
-pages                              #contains the php pages stored on the web server that deal with handling the mobile application                                           aswell as the web application 
-screenshots                        #containts screens shots the solution 
-.gitmodules                        #containts module data
+css                                #Contains css for webpage
+pages                              #Contains the php pages stored on the web server that deal with handling the mobile application                                           aswell as the web application 
+screenshots                        #Contains screens shots the solution 
+.gitmodules                        #Contains module data
 
 
 
