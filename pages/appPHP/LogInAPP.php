@@ -3,7 +3,11 @@
 include_once "headerAPP.php";
 
 
-
+if (isset($_SESSION["UserID"]))
+{
+    header("Location: InputDataAPP.php");
+    die();
+}
 
 if(isset($_POST["email"])){
     $mysql_email = $_POST["email"];
@@ -19,8 +23,13 @@ if (strlen($_POST["password"]) > 5 && strlen($_POST["email"]) > 0)
 {
 if (password_verify($_POST["password"], $data[0]))
        {
-           $_SESSION["UserID"] = $data[1];
+		   $_SESSION["UserID"] = $data[1];
+		   $_SESSION["FirstName"] = $data[2];
+           $_SESSION["LastName"] = $data[3];
+    
 		   echo "success";
+		   echo $data[1];
+		   
 	   }
 	   else
         {

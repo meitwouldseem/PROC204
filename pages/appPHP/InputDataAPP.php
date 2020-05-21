@@ -1,17 +1,12 @@
 <?php
 
-include_once "header.php";
+include_once "headerAPP.php";
 
-if (!isset($_SESSION["UserID"]))
-{
-	echo "failure";
-    header("Location: LogInAPP.php");
-    die();
-}
 
-if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"])  && isset($_POST["Rating"])) {
-    $db->InsertSleepDatum($_SESSION["UserID"], $_POST["SleepStart"],$_POST["SleepEnd"], $_POST["Rating"]);
-	echo "success";
+
+if( isset($_POST["SleepStart"]) && isset($_POST["SleepEnd"]) && isset($_POST["UserID"]) && isset($_POST["Rating"])) {
+    $db->InsertSleepDatum($_POST["UserID"], $_POST["SleepStart"],$_POST["SleepEnd"], $_POST["Rating"]);
+	echo $_POST["SleepStart"];
 }
 
 else {
