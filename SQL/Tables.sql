@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: proj-mysql.uopnet.plymouth.ac.uk
--- Generation Time: May 21, 2020 at 03:52 PM
+-- Generation Time: May 21, 2020 at 04:27 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.19
 
@@ -66,14 +66,14 @@ DROP PROCEDURE IF EXISTS `get_User_Calendar_Events`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calendar_Events` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
 SELECT EventTitle as Title,EventStart as StartTime,EventEnd as EndTime,EventID as ID
 FROM event
-WHERE UserID = UserID AND EventStart > StartDate AND EventStart < EndDate 
+WHERE UserID = event.UserID AND EventStart > StartDate AND EventStart < EndDate 
 Order by StartTime$$
 
 DROP PROCEDURE IF EXISTS `get_User_Calendar_Sleeps`$$
 CREATE DEFINER=`PRCO204_Y`@`%` PROCEDURE `get_User_Calendar_Sleeps` (IN `UserID` INT, IN `StartDate` DATE, IN `EndDate` DATE)  NO SQL
 SELECT 'Sleep' as Title,SleepStart as StartTime,SleepEnd as EndTime,SleepID as ID
 FROM sleepinstance
-WHERE UserID = UserID AND SleepStart > StartDate AND SleepStart < EndDate
+WHERE UserID = sleepinstance.UserID AND SleepStart > StartDate AND SleepStart < EndDate
 Order by StartTime$$
 
 DROP PROCEDURE IF EXISTS `insert_Event`$$
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `Theme` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`SettingsID`),
   KEY `FK_Settings_Cascade` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `settings`
@@ -158,7 +158,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
 INSERT INTO `settings` (`SettingsID`, `UserID`, `Theme`) VALUES
 (4, 24, 0),
 (5, 24, 0),
-(7, 24, 0);
+(7, 24, 0),
+(9, 29, 0);
 
 -- --------------------------------------------------------
 
@@ -175,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `sleepinstance` (
   `SleepMood` int(11) NOT NULL,
   PRIMARY KEY (`SleepID`),
   KEY `FK_SleepInstance_Cascade` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sleepinstance`
@@ -186,7 +187,11 @@ INSERT INTO `sleepinstance` (`SleepID`, `UserID`, `SleepStart`, `SleepEnd`, `Sle
 (32, 24, '2020-05-18 21:42:00', '2020-05-19 07:28:00', 2),
 (36, 24, '2020-05-15 04:19:00', '2020-05-15 12:19:00', 5),
 (37, 24, '2020-05-21 04:19:00', '2020-05-21 12:19:00', 4),
-(38, 24, '2020-05-20 04:19:00', '2020-05-20 06:19:00', 1);
+(40, 29, '2020-05-21 05:16:00', '2020-05-21 14:16:00', 3),
+(41, 29, '2020-05-20 05:16:00', '2020-05-20 19:16:00', 5),
+(43, 29, '2020-05-18 05:20:00', '2020-05-18 20:20:00', 3),
+(44, 29, '2020-05-19 05:20:00', '2020-05-19 21:20:00', 5),
+(45, 29, '2020-05-20 22:21:00', '2020-05-20 23:21:00', 1);
 
 -- --------------------------------------------------------
 
@@ -203,14 +208,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `EmailAddress` (`EmailAddress`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`UserID`, `EmailAddress`, `FirstName`, `LastName`, `Password`) VALUES
-(24, 'test@test.com', 'test', 'test', '$2y$10$jrkKW1UAuPAb4Ne.0W9HFuoBcK2VxAKVvgHG3VqrmD.kYMDDPWSeW');
+(24, 'test@test.com', 'test', 'test', '$2y$10$jrkKW1UAuPAb4Ne.0W9HFuoBcK2VxAKVvgHG3VqrmD.kYMDDPWSeW'),
+(29, 'demo@test.com', 'Demo', 'Video', '$2y$10$l/1PKPsYb6pBOHEHLAf8w..5hPoMQs6nDh9dd5kclFzaHuyVC6d6m');
 
 --
 -- Constraints for dumped tables
